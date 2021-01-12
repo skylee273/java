@@ -16,7 +16,7 @@ java-study
 - [Abstract](#Abstract)
 - [Interface](#Interface)
 - [Anonymous](#Anonymous)
-- [2일차 최종정리](#2일차-최종저리)
+- [2일차 최종정리](#2일차-최종정리)
 
 ## About The Project
 
