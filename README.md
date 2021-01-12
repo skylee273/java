@@ -11,6 +11,13 @@ java-study
 - [Array](#Array)
 - [1일차 최종정리](#1일차-최종정리)
 - [Super](#Super)
+- [Polymorphism](#Polymorphism)
+- [Encapsulation](#Encapsulation)
+- [Abstract](#Abstract)
+- [Interface](#Interface)
+- [Anonymous](#Anonymous)
+- [2일차 최종정리](#2일차-최종저리)
+
 ## About The Project
 
 ## Data Type
@@ -219,4 +226,289 @@ java-study
     - 자식 입장에서는 기본 생성자를 기본적으로 호출한다 
         + 기본 생성자는 항상 만들어지기 때문에 기본적으로 기본 생성자를 호출한다.
         + 명시적으로 지정할시 반드시 첫라인에 사용해야된다.
+
+* Object의 toString()
+    - 참조변수를 println 할때 자동으로 호출된다.
+        + 참조변수는 주소값이 저장되어 있음.
+        + print하면 콘솔(console)에 문자열로 출력시키기 위해서 toString() auto call
+
+    - Object의 toString 구현
+        + return 클래스명 @16진수
+
+    - 결론은 모든 사용자 정의클래스 Object의 toString 재정의하자
+        + 명시적인 메서드 호출없이 원하는 객체 정보를 출력할 수 있다.    
+
+* API
+    - 시스템 제공한 클래스 의미 ===> 패키지로 제공
+    - API 문서 : https://docs.oracle.com/javase/8/docs/api/index.html
+    ```java
+    Date d = new Date();
+    System.out.println(d); // d.toString() 동일
+    List<String> list = Arrays.asList("aa", "bb");
+    System.out.println(list);
+    ```
+
+## Polymorphism
+* 객체지향의 (OOP) 3대 특징
+    - 상속 (inheritance)
+    - 다형성 (Polymorphism)
+    - 은닉화 (캡슐화, encapsulation)
+* 다형성
+    - 상속전제
+    - 개념 : 하나의 변수가 서로 다른 데이터 타입을 참조하는 능력
+    - 문법
+        + 큰 타입 = 작은타입;
+        + 부모클래스 타입변수 = new 자식클래스();
+    - 단 하나의 변수로 여러 데이터 타입을 참조할 수 있다.
+
+    ```java
+    public static void main(String[] args) {
+
+        // 1. 다형성 미적용
+        Cat c = new Cat("나비", 2, "블랙");
+        Dog d = new Dog("망치", 1, "수컷");
+
+
+        // 2. 다형성 적용 ==> 하나의 변수로 모든 애완동물 참조 가능
+        Pet pet = new Cat("나비",2,"블랙");
+        System.out.println("고양이정보" + pet);
+        pet = new Dog("망치", 1, "수컷");
+        System.out.println("강아지정보" + pet);
+    }
+    ```
+    ```java
+    public static void main(String[] args) {
+
+        // 1. 다형성 미적용
+        Cat c1 = new Cat("나비1", 2, "블랙");
+        Cat c2 = new Cat("나비2", 2, "블랙");
+        Cat c3 = new Cat("나비3", 2, "블랙");
+        Dog d1 = new Dog("망치1", 1, "수컷");
+        Dog d2 = new Dog("망치2", 1, "수컷");
+        Dog d3 = new Dog("망치3", 1, "수컷");
+
+        Cat []  cats = {
+                new Cat("나비1", 2, "블랙"),
+                new Cat("나비1", 2, "블랙"),
+                new Cat("나비1", 2, "블랙")};
+        Dog []  dogs = {
+                new Dog("망치1", 1, "수컷"),
+                new Dog("망치1", 1, "수컷"),
+                new Dog("망치1", 1, "수컷")};
+
+        // 2. 다형성 적용 ==> 하나의 변수로 모든 애완동물 참조 가능
+        /**
+         * - 배열사용 : 다형성의 대표적인 샘플
+         */
+        Pet [] pets = {
+                new Cat("나비1", 2, "블랙"),
+                new Cat("나비1", 2, "블랙"),
+                new Cat("나비1", 2, "블랙"),
+                new Dog("망치1", 1, "수컷"),
+                new Dog("망치1", 1, "수컷"),
+                new Dog("망치1", 1, "수컷")
+        };
+
+        for (Pet pet  : pets){
+            System.out.println(pet);
+        }
+
+        // 다형성 확장
+        Object [] obj = {"홍길동", 20, new Date(), new Cat("나비1", 2, "블랙")};
+
+        // 메소드 파라미터 - 다형성의 대표적인 샘플
+        setData(20);
+    }
+    ```
+
+    ```java
+    public static void main(String[] args) {
+        Pet [] pets = {
+                new Cat("나비1", 2, "블랙"),
+                new Cat("나비1", 2, "블랙"),
+                new Cat("나비1", 2, "블랙"),
+                new Dog("망치1", 1, "수컷"),
+                new Dog("망치1", 1, "수컷"),
+                new Dog("망치1", 1, "수컷")
+        };
+
+        // 1. 모든 애완동물 출력
+        for (Pet pet: pets){
+            System.out.println(pet);
+        }
+        System.out.println("/////////////////////");
+        // 2. 고양이만 출력 ==> 고양이 타입인지 체크 필요,  instanceof
+        for (Pet pet : pets){
+            if(pet instanceof Cat){
+                System.out.println("고양이 정보만 출력 :" +pet);
+            }
+        }
+
+        // 3. 고양이의 정보중에서 색상만 출력
+        for(Pet pet : pets){
+            if(pet instanceof Cat){
+                // Cat 형변환
+                Cat cat = (Cat)pet;
+                System.out.println("고양이 색상만 출력: " + cat.getColor());
+            }
+        }
+
+    }
+    ```
+## Encapsulation
+* 접근지정자 은닉화 구현
+    - private : instance val
+    - public : method
+    - Student 입장에서 효율적 (올바른 데이터 설정)
+
+* Method private
+    - TestStudent 입장에서 효율적 (사용하지 않는 메서드 hide : 복잡성이 감소)
+
+    ```java
+    public class Student {
+
+    // 1. 은닉화(Student입장) : 직접 접근하지 못하게 변수를 private 설정 ==> 올바른 데이터 설정  목적
+    //
+    private String name;
+    private int age;
+
+    // 검증 메서드
+    private boolean ageCheck(int age){
+        return age > 100;
+    }
+
+    public void setAge(int age){
+        if(ageCheck(age)) {
+            System.out.println("age 잘못설정");
+        }
+        else{
+            this.age = age;
+        }
+    }
+    }
+    ```
+
+## Abstract
+
+* 추상메서드 (abstract method)
+    - public abstract void methodName(); Signature 표현
+    - 클래스는 반드시 abstract로 지정
+    - 추상클래스 요소
+        - 인스턴스 변수
+        - 생성자
+        - 일반 메서드 (인스턴스 메서드)
+        - 추상 메서드 (abstract)
+    - 추상 클래스를 상속받은 자식에서는 반드시 추상메서드를 재정의 해야한다.
+        + 목적 : 자식클래스에서 꼭 사용하도록 강제한다.
+    - 추상 클래스는 new 불가
+    - 다형성 적용 가능
+    - 여러 클래스에서 공통적인 메서드 사용하게 하자. (강제성 필요==> 추상클래스)
+
+    ```java
+    public static void main(String[] args) {
+        Cat c = new Cat("나비", 2, "블랙");
+        Dog d = new Dog("망치", 1, "수컷");
+
+        System.out.println("고양이 정보 : "  + c);
+        c.eat();
+        c.sleep();
+        System.out.println("강아지 정보 : " + d);
+        d.dog_eat();
+        d.dog_sleep();
+
+        // method가 많아짐 비효율적 (Cat은 재정의 했지만 Dog은 나름대로 메소드 추가함)
+        // 잘 따라주면 좋은데 안따라주는 것이 있다. -> 강제적으로 부모 메소드 기능 사용하도록
+    }
+    ```
+
+## Interface
+날아 다니는 기능 메서드 fly()는 어디에 추가할것인가?
+
+* fly() 새로운 기능 추가방법
+    - Pet 클래스 추가
+        + fly 기능이 없는 Cat?
+
+    - Bird 클래스 추가
+        + fly()
+        + Bird2() Class 생성시 ? 
+        + 메소드가 많아 짐에 따라 비효율적 -> 공통적으로 강제해야함
+
+    - Interface 
+
+* 인터페이스 구성요소 4가지
+    - 상수
+        + public static final 자동 지정됨
+
+    - 추상메서드 ( 주로 쓰는 이유 ⁂⁂⁂⁂)
+        + public abstract 자동지정 -> 자동 지정 권장
     
+    - default 메서드
+        + 일반클래스 인스턴스 메서드 기능과 동일
+    
+    - static 메서드
+
+* 추상클래스와 인터페이스 비교
+    - 추상클래스 
+        + public abstract class 클래스명{}
+        
+        + 구성요소
+            + 인스턴스 변수, 생성자, 인스턴스 메서드 ---> 일반클래스 요소
+            + 추상메서드 (abstract)
+        + 특징
+            + new 불가 (객체생성 불가)
+            + 임의의 클래스 이용해서 추상클래스 요소로 사용됨
+                + 임의의 클래스와 추상클래스 상속관계로써 extends 사용한다 ( 단일 상속만 지원)
+        + 목적
+            + 하위 클래스에서 특정 메서드만 사용하도록 강제 + 일반 클래스의 상속 (공통기능 재사용) 장점 제공
+        + 단점
+            + 다른 클래스를 상속불가 (하나만 받아야 하기 때문에 인터페이스로 받으면 여러개 받을 수 있는 장점이 있다.)
+            + 특정 메소드만 강제할 목적이다 -> 인터페이스로 만드는게 좋다 (확장성이 좋기 때문에)
+    - 인터페이스
+        + public interface 인터페이스명{}
+        + 구성요소
+            + 상수, 추상메서드, default 메서드, static 메서드
+        + 특징
+            + 임의의 클래스 이용해서 인터페이스 요소로 사용됨
+                + 임의의 클래스와 인터페이스 구현관계로서 implements 사용한다. (다중구현 가능)
+            + 인터페이스간에 다중 상속 가능 (extends 사용)
+        + 목적
+            + 하위 클래스에서 특정 메서드만 사용하도록 강제 + 클래스들간의 의존성 감소(decoupling)
+
+* DB 연동 아키텍처
+    - Main <----> Service <----> DAO <----> DB(오라클, Mysql)
+        + Main
+            + 화면처리 + 사용자이벤트 발생 + 데이터출력 기능
+        + Service 
+            + 중간자 역할 + 트랜잭션 처리 (commit, rollback)
+        + DAO
+            + Datavase Access Object 패턴
+                + 실제 DB, file 접근하는 용도
+    - TestMain <----> DBService <----> OracleDAO <----> Oracle
+        + MysqlDAO  <----> Mysql
+            + 현재 문제 하나의 변경으로 인해 여러 영향을 미친다. (DBService 까지 영향 미침)
+            + DB 변경시 DBService 변경 여파가 미친다.
+
+* 인터페이스 이용한 의존성 감소
+
+
+## Anonymous
+* 중첩 클래스 (nested Class)
+    
+    ```java
+    class Outer{
+     ..
+     ..
+     ..
+     class Inner{
+     }//end Inner
+    }
+    ```
+
+    + member inner class
+    + local inner class
+    + static inner class
+    + 익명 클래스
+
+* 익명 클래스 (Anonymous class)
+    - 이름이 없는 클래스
+    - 인터페이스 사용시 주로 익명클래스 사용됨 (가독성이 높아지기 때문에)
