@@ -515,3 +515,347 @@ java-study
 
 ## 2일차 최종정리
 ![2일차 그림](./asset/2day.png)
+
+
+## Lambda
+
+* 함수형 프로그래밍 언어에 적합한 표현식. ( JDK 1.8)
+    - 함수형 프로그래밍(functional Programming)
+        + 함수 기반으로 프로그래밍을 하자.
+        + 자바는 최소단위 클래스이다. ==> 따라서 하나의 메서드가 필요한 경우에도 반드시 클래스가 필요하다.
+        + 불필요한 클래스를 배번 생성해야 하기 때문에 비효율성 증가 
+        + 메서드만 집중해서 표현할 수 있는 람다식을 이용한다.
+            + 실행하면 런타임때 익명클래스가 자동으로 생성된다.
+        > java 는 A라는 메소드 사용하려면 최소 A를 감싸는 클래스를 만들어야 한다. 람다를 이용하면 A라는 것만 이용할 수 있다. 람다를 실행할때 익명 클래스가 만들어진다 겉으로 보여지진 않지만 클래스가 만들어지는 것이기 때문에 내부적으로는 최소 단위인 클래스를 이용한다고 볼 수 있다.
+
+    - 람다식의 특징
+        + 객체가 아닌 기능적인 코드(메서드)에 집중하자.
+        + 간결한 표현식
+        + **하나의 메서드를 가진 인터페이스 사용시 일반적으로 람다식이 사용된다.**
+        + 특정 인터페이스가 하나의 추상메서드를 가지는 것을 강제할 방법으로 @FunctionalInterface 사용한다.
+
+    - 람다식의 문법
+        + 인터페이스를 활용한 익명클래스의 또 다른 표현식이라고 생각하자. 
+        + 메서드의 기능에 따라서 람다식 표현이 달라진다. 
+        + 메서드 문법
+            ```java
+            public returnType 메서드명([val1, val2..]){
+                문장;
+                [return 값;]
+            }
+            ```
+        + 메서드 기능에 따른 종류 4가지
+            - 파라미터 변수 없고 리턴값 없는 경우
+            - 파라미터 변수 있고 리턴값 있는 경우
+            - 파라미터 변수 없고 리턴값 있는 경우
+            - 파라미터 변수 있고 리턴값 없는 경우
+    - 람다표현 방법 (7가지)
+    ```java
+    public class LambdaTest {
+    public static void main(String[] args) {
+
+        // 1. 익명클래스
+        Flyer flyer = new Flyer() {
+            @Override
+            public void fly() {
+                System.out.println("익명클래스.fly");
+            }
+        };
+        flyer.fly();
+
+        //2. 람다 표현식 (arrow 표현식)
+        Flyer flyer1 = () ->  {
+            System.out.println("람다표현식.fly");
+        };
+        flyer1.fly();
+
+        //2. 람다 표현식 ===> 단일 문장인 경우에는 {}생략가능
+        Flyer flyer2 = () -> System.out.println("람다표현식.fly2");
+        flyer2.fly();
+
+        } //end main
+    }//end class
+    ```
+
+    ```java
+    public class LambdaTest2 {
+    public static void main(String[] args) {
+
+        // 1. 익명클래스
+        Flyer2 fly = new Flyer2() {
+            @Override
+            public void fly(int n) {
+                System.out.println("익명클래스 n = " + n);
+            }
+        };
+
+        fly.fly(10);
+
+        //2. 람다표현식
+        Flyer2 fly2 = (int n) -> System.out.println("람다표현식 n = " + n);
+        fly2.fly(20);
+
+        //3. 람다표현식 ==> 데이터 타입 생략
+        Flyer2 fly3 = (n) -> System.out.println("람다표현식 n = " + n);
+        fly3.fly(30);
+
+        //4. 람다표현식 ==> 파라미터변수가 하나인 경우에는 () 생략가능
+        Flyer2 fly4 = n -> System.out.println("람다표현식 n = " + n);
+        fly4.fly(40);
+
+        }
+    }
+    ```
+
+    ```java
+    public class LambdaTest3 {
+
+    public static void main(String[] args) {
+        //1. 익명클래스
+        Flyer3 f = new Flyer3() {
+            @Override
+            public void fly(int n, int n2) {
+                System.out.println("익명클래스.fly"+ n + "\t" + n2);
+            }
+        };
+        f.fly(10,30);
+
+
+        //2.람다표현식
+        Flyer3 f2 = (int n, int n2) -> System.out.println("람다표현식.fly" + n + "\t" + n2);
+        f2.fly(10,20);
+
+        //3. 람다표현식
+        Flyer3 f3 = (n, n2) -> System.out.println("람다표현식.fly" + n + "\t" + n2);
+        f3.fly(30,40);
+
+        }
+    }
+    ```
+
+    ```java
+    public class LambdaTest4 {
+    public static void main(String[] args) {
+
+        //1.익명클래스
+        Flyer4 fly = new Flyer4() {
+            @Override
+            public int fly() {
+                return 6;
+            }
+        };
+        System.out.println("익명클래스.fly" + fly.fly());
+
+        //2. 람다 표현식
+        Flyer4 fly2 = () -> {
+            System.out.print("람다표현식.fly");
+            return 999;
+        };
+        int result2 = fly2.fly();
+        System.out.println(result2);
+
+        //3. 람다표현식 // {} return 키워드 생략 가능
+        Flyer4 fly3 = () -> 3;
+        System.out.println("람다표현식3.fly" + fly3.fly());
+
+
+    }
+    }
+    ```
+
+    ```java
+    public class LambdaTest5 {
+    public static void main(String[] args) {
+
+        //1. 익명 클래스
+        Flyer5 f = new Flyer5() {
+            @Override
+            public int fly(int n, int n2) {
+                return n + n2;
+            }
+        };
+
+
+        System.out.println("익명클래스.fly" + f.fly(10,20));
+
+        //2.람다 표현식
+        Flyer5 f2 = (int n, int n2) -> { return n + n2; };
+        System.out.println("람다표현식.fly" + f.fly(30,40));
+
+        //3.람다표현식
+        Flyer5 f3 = Integer::sum;
+        System.out.println("람다표현식.fly" + f3.fly(80,40));
+        }
+    }
+    ```
+    
+    ```java
+    public class LambdaTest6 {
+    public static void main(String[] args) {
+
+        //1.기존방식
+        String [] names = {"John", "Zen", "Ada", "Bob"};
+        Arrays.sort(names);
+        System.out.println("1.오름차순 정렬:" + Arrays.toString(names));
+
+        //내림차순 정렬 ==> java.util.Comparator 인터페이스 활용
+
+        Comparator<String> comparator = new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o2.compareTo(o1); // 내림차순 정렬
+            }
+        };
+
+        Arrays.sort(names, comparator);
+        System.out.println("2.내림차순 정렬:" + Arrays.toString(names));
+
+        // 아래 방식과 같이 사용하는게 일반적
+        Arrays.sort(names, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o2.compareTo(o1); // 내림차순 정렬
+            }
+        });
+        System.out.println("2.내림차순 정렬:" + Arrays.toString(names));
+
+        Arrays.sort(names, (String o1, String o2) -> o2.compareTo(o1));
+        System.out.println("3.내림차순(람다) 정렬:" + Arrays.toString(names));
+
+        Arrays.sort(names, (o1, o2) -> o2.compareTo(o1));
+        System.out.println("3.내림차순(람다) 정렬:" + Arrays.toString(names));
+
+
+        }
+    }
+    ```
+    ```java
+    public class LambdaTest7 {
+    public static void main(String[] args) {
+
+        // 1. list 관리 ( 기존방식 )
+        List<Person> list = Arrays.asList(new Person("홍길동",20), new Person("이하늘",29), new Person("김길동",31)
+        , new Person("테스트",45), new Person("사람인",18));
+
+        // 배열인 경우 ---> Arrays.sort();
+        // 리스트인 경우 --> Collections.sort()
+
+        list.sort(new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return o1.age - o2.age;
+            }
+        });
+
+        System.out.println(list);
+
+        // 2. 람다 표현식
+        list.sort((o1, o2) -> o2.age - o1.age);
+        System.out.println(list);
+        }
+    }
+    ```
+
+## Generics
+
+* <T>, <?>, <? extends>, <? super 클래스 명>
+    - 참조형만 가능 (기본형은 Wrapper 클래스로 사용)
+        + 기본형
+            - byte  =======================> Byte
+            - short =======================> Short
+            - int   =======================> **Integer**
+            - long  =======================> Long
+            - float =======================> Float
+            - double=======================> Double
+            - char  =======================> **Charter**
+            - boolean =======================> Boolean
+    
+    - Case 1
+        + 데이터 갯수만큼 setValue 추가된다 ==> 오버로딩 메서드 형태로 구현 ==> 비효율적
+        ```java
+        class Box{
+
+        public void setValue(String string){
+
+        }
+
+        public void setValue(Date date) {
+
+        }
+        }
+        public class GenericTest {
+            public static void main(String[] args) {
+                //1. 문자열 저장
+                Box b = new Box();
+                b.setValue("홍길동");
+
+                Box b2 = new Box();
+                b2.setValue(new Date());
+            }
+        }
+        ```
+    - case2
+        + 문자열이 아닌 숫자를 넣어도 컴파일 에러가 발생되지 않는다.
+        + 잘못된 데이터가 저장된 사실을 개발단계인 컴파일 시점이 아닌 실제로 실행되는 런타임 시점에 확인할 수 있다.
+        ``` java
+        public class GenericTest {
+            public static void main(String[] args) {
+
+                 Box b = new Box();
+
+                 b.setValue("홍길동");
+
+                 String str = (String)b.getValue(); //나. 반드시 형변환 필요
+                 System.out.println("1." + str);
+
+                 Box b2 = new Box();
+                 b2.setValue(new Date());
+
+                 Date d = (Date) b2.getValue();
+                 System.out.println("2." + d);
+            }
+        }
+        ```
+    - case3
+        + Object ---> T 로 변경. T는 Box 클래스를 생성할때 구체적인 타입으로 변경된다.
+        + 잘못된 데이터가 저장된 사실을 개발단계인 컴파일시점이 아닌 실제로 실행되는 런타임 시점에 확인 할 수 있다.
+        ```java
+        class Box<T>{
+            T obj;
+            public void setValue(T obj){
+                this.obj = obj;
+            }
+            public T getValue(){
+                return obj;
+            }
+        }
+
+        public class GenericTest {
+        public static void main(String[] args) 
+            Box<String> b = new Box<String>();
+            b.setValue("홍길동");
+            System.out.println("1." + b.getValue())
+            Box<Date> b2 = new Box<Date>();
+            b2.setValue(new Date());
+            System.out.println("2." + b2.getValue())
+            }
+        }   
+        ```
+## Collection
+* 자바의 저장 방법 3가지
+    + 변수
+        - 하나의 데이터 저장
+        - 기본형 변수 & 참조형 변수
+    + 배열
+        - 여러 데이터 저장용
+        - 참조형 변수
+        - 특징 
+            + 동일한 데이터만 저장 가능
+            + 크기 변경불가
+            + 접근시 인덱스(첨자)사용
+            + 배열과 관련된 메서드가 없다. (Arrays 유틸리티 제외)
+            + 배열크기 : 배열명.Length(상수)
+            
+    + 컬렉션 API
+}
+        
