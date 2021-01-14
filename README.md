@@ -17,6 +17,12 @@ java-study
 - [Interface](#Interface)
 - [Anonymous](#Anonymous)
 - [2일차 최종정리](#2일차-최종정리)
+- [Lambda](#Lambda)
+- [Generics](#Generics)
+- [Collection](#Collection)
+- [Function Interface](#Function-Interface)
+- [Stream](#Stream)
+- [String](#String)
 
 ## About The Project
 
@@ -841,6 +847,7 @@ java-study
             }
         }   
         ```
+      
 ## Collection
 * 자바의 저장 방법 3가지
     + 변수
@@ -857,5 +864,153 @@ java-study
             + 배열크기 : 배열명.Length(상수)
             
     + 컬렉션 API
-}
+        - 여러 데이터 저장 가능
+        - 참조형 변수 
+        - 특징 
+            + 모든 데이터 저장 가능
+            + 크기 변경 가능 (추가, 삽입, 수정, 삭제)
+            + 접근시 메서드를 사용
+            + 다양한 메서드가 제공
+            + 컬렉션 크기 : 변수명.size()
+            + 문자열 길이 : String n = "hello"
+                + n.length() (메서드)
+    + 컬렉션 API 계층구조
+        ![2일차 그림](./asset/day2_1.png)
+
+        + Set 계열 : 저장되는 데이터의 순서가 없고 중복저장 불가 (동일한 값은 한번만 저장, 중복제거 기능 포함)
+        + List 계열 : 저장되는 데이터의 순서가 있고 중복저장 가능
+            + Set과 List는 데이터만 저장된다.
         
+        + Map 계열
+            + 데이터와 데이터에 해당되는 이름(Key) 쌍으로 저장된다.(Key/Value 쌍)
+            + Key 이용해서 Value 얻는다. (검색속도가 빠름)
+
+## Function Interface
+* JDK 1.8지원
+* java.util.function 패키지 포함되고 모두 interface로 구성됨
+    - interface 사용할려면 
+        + 이름있는 클래스
+        + 익명 클래스
+        + 람다 함수(****)
+* **종류 5가지**
+    - Consumer
+        + Parameter o, Return x
+    - Supplier
+        + Parameter x, Return o
+    - Function
+        + Parameter o, Return o
+        + **Mapping**
+            + int -> String, String -> int, String->int 
+    - Operator
+        + Parameter o, Return o
+        + 전달하는 파라미터를 연산해서 임의의 값으로 리턴하는 용도
+        + **연산**
+        + 내부적으로 Function 상속 받음
+    - Predicate
+        + Parameter o, Return o
+        + 파라미터 있고 리턴값이 boolean 인 경우
+    - 공통적으로 추상 메서드가 선언되어 있다.
+    - 기능적으로 모든 메서드는 4가지 형태이다
+        + Parameter x, Return x
+        + Parameter x, Return o
+        + Parameter o, Return x
+        + Parameter o, Return o
+        > 위 4가지 기능을 구현하고자 한다면 직접 클래스로 구현하지 말고 상위의 함수적 인터페이스를 이용하자.
+        
+
+## Stream
+
+* Java I/O
+    - InputStream
+    - OutputStream
+* Stream API
+    - JDK 1.8 지원
+    - Collection 저장된 데이터를 중간처리 최종처리를 할 수 있다
+    - 중간처리 : ( 중복제거, 정렬, Skip,..) ==> 맵 (map)
+    - 최종처리 : ( 총합, 최대값, 최소값, 갯수, ...) 가 가능하다. ==> 리듀스 (reduce) ==> 맵/리듀스
+    - 함수형 인터페이스 API가 사용된다.
+* Stream 타입 얻기
+    - 컬렉션
+    - 배열
+    - 파일
+* 종류
+    - IntStream
+    - LongStream
+    - DoubleStream
+* 중간처리
+    - 중복제거
+        + distinct()
+    - 필터링
+        + filter()
+    - 정렬
+        + sorted()
+    - 개수제한
+        + limit(n)
+    - map()
+        + 사용자 정의 중간처리
+ * 최종처리
+    - 총합
+    - 개수
+    - 최대/최소
+    - collect()
+ * Optional 클래스
+    - 집계값이 존재하지 않을경우 예외가 발생한다.
+    - 따라서 예외방지용으로 Optional 클래스를 사용할 수 있다.
+ * method 사용시 간략한 표현 방법
+    - static Method
+    - instance Method
+
+## String
+* 값 또는 New 차이
+    ```java
+       // 1. 값만 이용 ==> 동일한 문자열은 재사용
+       String s = "hello";
+       String s2 = "hello";
+
+       System.out.println("주소값 비교:" + (s == s2));
+       System.out.println("실제값 비교:" + s.equals(s2));
+       // 2. new 이용 ===> 매번 Heap 메모리에 생성
+       String  x = new String("Hello");
+       String x2 = new String("Hello");
+       System.out.println("주소값 비교 : " + (x == x2));
+       System.out.println("실제값 비교 : " + x.equals(x2));
+    ```
+* String 문법
+    ```java
+        String s = "Hello";
+        System.out.println("1. 문자열 길이 : " + s.length());
+        System.out.println("2. 특정문자 얻기 : " + s.charAt(0));
+        System.out.println("3. 부분열 : " + s.substring(1));
+        System.out.println("4. 부분열 : " + s.substring(1,s.length() -1 ));
+        System.out.println("5. 특정문자위치: " + s.indexOf('e'));
+        System.out.println("6. 특정문자위치: " + s.indexOf('X')); // 일치하는 문자 없으면 -1 반환
+        System.out.println("7. 문자열연결: " + s.concat("~~~~"));
+        System.out.println("8. 대문자: " + s.toUpperCase(Locale.ROOT));
+        System.out.println("9. 소문자: " + s.toLowerCase(Locale.ROOT));
+        System.out.println("10. 문자열 비교:" + s.equals("hello"));
+        System.out.println("11. 문자열 비교:" + s.equalsIgnoreCase("hello"));
+        System.out.println("12. 특정문자 포함여부: " + s.contains("H"));
+        System.out.println("13. 특정문자 포함여부: " + s.contains("h"));
+        System.out.println("14. 문자열 치환: " + s.replace('H', 'Z'));
+
+        String s2 = "     world     ";
+        System.out.println("15. 공백제거: " + s2.trim()); // 양쪽 공백제거
+        System.out.println("15. 공백제거: " + s2.trim().length()); // 5
+
+        char [] chs = s.toCharArray();
+        System.out.println("16. 문자배열: " + Arrays.toString(chs));
+
+        // 구분자 분리
+        String s3 = "aaa/bbb/ccc";
+        String [] strArr = s3.split("/");
+        System.out.println("17. 구분자 분리: " + Arrays.toString(strArr));
+
+        String xyz = s.replace('H','X');
+
+        System.out.println(s);
+        System.out.println(xyz);
+
+        // 원본
+        System.out.println(s);
+    ```
+> String 가장 큰 특징은 변경 불가 따라서 다양한 메서드로 처리하면 새로운 문자열이 매번 생성된다. StringBuffer/StringBuilder => 자신이 변경됨 => 메모리 관리 효율적.
