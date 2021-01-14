@@ -21,8 +21,12 @@ public class TestMain {
          *      - 파라미터 없고 리턴값 있는 경우
          *  - Function
          *      - 파라미터 있고 리턴값 있는 경우
+         *      - 전달하는 파라미터의 타입과 리턴되는 리턴값의 타입 맵핑(*)용도
+         *          -> 예 int -> String, String -> int, String,String -> int ..
          *  - Operator
          *      - 파라미터 있고 리턴값 있는 경우
+         *      - 전달하는 파라미터를 연산(*)해서 임의의 값으로 리턴하는 용도
+         *      - 내부적으로 Function 상속받음
          *  - Predicate
          *      - 파라미터 있고 리턴값(boolean) 있는 경우
          *  ===> 공통적으로 추상 메서드가 선언되어 있다.
