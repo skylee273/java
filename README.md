@@ -7,6 +7,8 @@ java-study
 - [Data Type](#Data-Type)
 - [Variable](#Variable)
 - [Upcasting](#Upcasting)
+- [Operator](#Operator)
+- [Static](#Static)
 - [Class](#Class)
 - [Array](#Array)
 - [1일차 최종정리](#1일차-최종정리)
@@ -23,9 +25,33 @@ java-study
 - [Function Interface](#Function-Interface)
 - [Stream](#Stream)
 - [String](#String)
-
+- [Exception](#Exception)
+- [Java I/O](#Java-I/O)
+- [Serialization](#Serialization)
+- [Thread](#Thread)
 ## About The Project
-
+- 01. 람다 표현식 (4지선다 - 선택) - 인터페이스와 관련있고, 인터페이스 익명클래스로 표현하고 4가지 형태 표현이 있는데 4가지 형태를 잘 표현해야된다.
+- 02. 코드를 제공 (Complie 오류 ) - Line 선택하고 이유 - Static 변수와 관련된 문제 ( 변수의 특징 - 로컬, 인스턴스, 스태틱 변수 특징들을 알아야함)
+- 03. 함수형 인터페이스 API 중에서 동작방식이 다른 하나 선택하는것 Consumer, Supplier, Function, Operator, Predicate 
+- 04. Skip
+- 05. 예외처리 ( 코드를 주고 빈칸 채우기 )
+- 06. 문자열과 스트링 클래스 관련 문제 - 코드를 주고 출력했을때 실행결과를 선택 
+- 07. 자료형관련됨 -> 기본자료형 8개 해당되는 클래스를 제공 -> 클래스를 냄 Wrrapper 
+- 08. I/O 관련된 문제 - 인터페이스 
+- 09. 컬렉션 List(순서, 중복), Set , Map 특징들을 알고있어야함
+- 10. 문자열과 관련된 -> 코드를 주고 실행결과를 물어봄 
+- 11. 문자열과 관련
+- 12. Skip
+- 13. 빈칸채우기 (코드를 주고 -> 상속, 인터페이스, 추상클래스 관련됨)
+- 14. 오버라이딩 메소드 -> 코드를 주고 -> 가장 적합한 오버라이딩 된 메소드를 선택
+- 15. 배열과 관련된 문제 
+- 16. 배열과 관련된 문제
+- 17. Skip
+- 18. 주관식 : 문자열과 관련된 문제
+- 19. 쓰레드 (빈칸 채우기) 
+- 20. 접근지정자와 관련된 문제 
+- lambda 1, static 1, exception 1, String 4, DataType 1, I/O 1, Collection 1, Super/Interface/Abstract 1, Overriding 1, Array 2, 
+Thread 1, Access 1
 ## Data Type
 
 * 기본형 데이터 (8가지)
@@ -61,7 +87,7 @@ java-study
 
 ## Variable
 * variable
-    - object
+    - 목적
         + data store
     
     - category
@@ -70,29 +96,29 @@ java-study
         
         + 참조형 변수 : 참조형 데이터를 저장한 변수
             + 변수에 가면 실제 데이터가 저장된 주소 값이 저장되어 있다. 
-            + 클래스,배열,인터페이스의 값의 주소값 저장되고 크기는 항상 4byte이다.
+            + 클래스,배열,인터페이스의 값의 주소값 저장되고 크기는 항상 **4byte**이다.
     
     - grammar
         + 변수 선언 : 메모리에 데이터를 저장할 영역만들고 영역에 이름 지정
 
         + 변수 초기화 
 
-    - 선언 위치에 따른 변수 3가지 종류 (⁂⁂⁂⁂⁂)
-        + local variable
+    - **선언 위치에 따른 변수 3가지 종류** 
+        + **local variable**
             + 메서드안에서 선언된 변수
             + 메서드 호출시 생성 ~ 매서드 소멸시 제거
-            + stack memory store
-            + 사용전에 반드시 초기화 해야한다.
-        + instance variable
+            + **stack memory store**
+            + **사용전에 반드시 초기화 해야한다.**
+        + **instance variable**
             + 메서드 밖에서 선언된 변수
-            + 객체생성(new) ~ 객체 소멸시 제거
-            + heap memory store
+            + **객체생성(new) ~ 객체 소멸시 제거**
+            + **heap memory store**
             + auto init ( 정수: 0, 실수 : 0.0, 논리 : false, 참조형 : null)
 
         + class variable (static)
             + 메서드 밖에서 선언된 변수 + static
             + 프로그램 실행시 ~ 프로그램 종료시 제거
-            + method area memory store
+            + **method area memory store**
             + auto init (정수: 0, 실수: 0.0 , 논리:false,  참조형: null)
 
 ## Upcasting
@@ -102,10 +128,10 @@ java-study
     - 묵시적 형변환 (자동 형변환)
         + byte > short > int > long > float > double
         + char > int (ascii)
-            + char값을 연산 가능하다.
-        + int보다 작은 데이터형의 연산결과는 int로 반환
+            + char 값을 연산 가능하다.
+        + int 보다 작은 데이터형의 연산결과는 int로 반환
 
-            ```
+            ```java
             short s = 10;
 		    short s2 = 20;
 		    short result = s+s2; //에러발생, s+s2의 결과는 int로 반환
@@ -116,29 +142,58 @@ java-study
     - 명시적 형변환 (강제 형변환)
         + (데이터 타입) 변수
     
-    ===========> 데이터 형변환은 기본형 뿐만 아니라 참조형도 가능 (클래스도 형변환 가능)
-## Class
-객체지향 프로그래밍 언어 ( Object Oriented Programming)
+    > 데이터 형변환은 기본형 뿐만 아니라 참조형도 가능 (클래스도 형변환 가능)
+## Operator
+* 산술연산자 (Arithmetic)
 
-=> 객체 개념을 이용해서 프로그래밍 한다.
-
-* Object?
+* 비교연산자 (Comparison)
+    - 비교연산자 ==> 실행 결과는 논리값 ( true/false)
     
-    subject가 바라본 사물 의미
+* 대입연산자 (Assignment)
+
+* 논리연산자 (Logical)
+    - 논리값 이용, 실행결과는 논리값
+        + && : and 의미, 그리고 해석
+        + || : or 의미, 또는 해석
+        + ! : not 의미, 부정
+* 증감연산자 (Incremental)
+    - 증가 연산자
+    - 감소 연산자
+> 주의사항 : 다른 연산자와 같이 사용시 실행결과가 달라질 수 있다.
+
+## Static 
+* static method
+    - new 없이 사용 가능 ( 목적: 편리할 목적, 싱글톤 객체 : 단 하나의 인스턴스만 생성패턴)
+    - 인스턴스 변수 접근 불가, this 사용불가
+
+* instance method(인스턴스 메서드)
+    - this 및 인스턴스 변수 및 static 변수 모두 사용 가능
+
+* static 초기화 블럭 
+    - 임의의 작업을 초기화 할때 사용 ( FILE OPEN )
+
+
+## Class
+객체지향 프로그래밍 언어 ( Object Oriented Programming )
+
+> 객체 개념을 이용해서 프로그래밍 한다.
+
+* 목적
+    - 주체가 바라본 사물 의미
 
 * 객체는 2가지 요소
     - 속성
         + 색상
         + 크기
         + 제조사
-        + 가격..
+        + 가격
+        + 기타
     - 동작
         + on
         + off
 
 * 자바 어플리케이션 개발 프로세스
-    
-    분석 --> 설계 --> 구현 --> 테스트 --> 배포
+    - **분석 --> 설계 --> 구현 --> 테스트 --> 배포**
     - 분석 : 객체 추출 (어플리케이션 개발에 적합한 객체)
         + 학생관리 프로그램 개발
             + 학생객체
@@ -159,19 +214,17 @@ java-study
 * 용어정리 
     - 객체 : 현실세계의 사물의미
     - 클래스 : 객체의 자바문법의 표현방법 (틀, 설계도)
-    - 인스턴스 : 메모리에 생성된 실체 (인스턴스, 객체)
+    - **인스턴스 : 메모리에 생성된 실체 (인스턴스, 객체)**
                 
                  
-* 접근지정자 (access modifier)
+* 접근지정자 (Access modifier)
     - 외부클래스에서 자신 접근 제약지정
         + public : 제약 X
         + protected
         + private : 자신만 접근
     
 * this
-    - 객체생성된 후 Heap Memory에 올라간 자신을 참조하는 키워드
-
-
+    - **객체생성된 후 Heap Memory에 올라간 자신을 참조하는 키워드**
 
 ## Array
 * 변수
@@ -183,7 +236,7 @@ java-study
     
 * 배열
     - 여러 데이터를 변수 (배열명) 하나로 관리 가능
-    - 동일한 데이터만 관리
+    - **동일한 데이터만 관리**
     - 사용방법
         + 배열 선언
         + 배열 생성
@@ -224,8 +277,8 @@ java-study
     - 다른 클래스에서 객체생성시
         + new ClassName();
     - 자식클래스에서 부모 생성자 호출
-        + super();
-            + (자식클래스 생성자 첫 라인에 자동 삽입)
+        + super(); -> (자식클래스 생성자 첫 라인에 자동 삽입)
+
     - 같은 클래스의 특정 생성자에서 다른 생성자 호출
         + this();
     
@@ -255,13 +308,13 @@ java-study
     ```
 
 ## Polymorphism
-* 객체지향의 (OOP) 3대 특징
+* **객체지향의 (OOP) 3대 특징**
     - 상속 (inheritance)
     - 다형성 (Polymorphism)
     - 은닉화 (캡슐화, encapsulation)
 * 다형성
     - 상속전제
-    - 개념 : 하나의 변수가 서로 다른 데이터 타입을 참조하는 능력
+    - 개념 : **하나의 변수가 서로 다른 데이터 타입을 참조하는 능력**
     - 문법
         + 큰 타입 = 작은타입;
         + 부모클래스 타입변수 = new 자식클래스();
@@ -406,7 +459,7 @@ java-study
         - 추상 메서드 (abstract)
     - 추상 클래스를 상속받은 자식에서는 반드시 추상메서드를 재정의 해야한다.
         + 목적 : 자식클래스에서 꼭 사용하도록 강제한다.
-    - 추상 클래스는 new 불가
+    - **추상 클래스는 new 불가**
     - 다형성 적용 가능
     - 여러 클래스에서 공통적인 메서드 사용하게 하자. (강제성 필요==> 추상클래스)
 
@@ -441,11 +494,11 @@ java-study
 
     - Interface 
 
-* 인터페이스 구성요소 4가지
+* **인터페이스 구성요소 4가지**
     - 상수
         + public static final 자동 지정됨
 
-    - 추상메서드 ( 주로 쓰는 이유 ⁂⁂⁂⁂)
+    - **추상메서드 ( 주로 쓰는 이유 ⁂⁂⁂⁂)**
         + public abstract 자동지정 -> 자동 지정 권장
     
     - default 메서드
@@ -453,7 +506,7 @@ java-study
     
     - static 메서드
 
-* 추상클래스와 인터페이스 비교
+* **추상클래스와 인터페이스 비교**
     - 추상클래스 
         + public abstract class 클래스명{}
         
@@ -463,22 +516,22 @@ java-study
         + 특징
             + new 불가 (객체생성 불가)
             + 임의의 클래스 이용해서 추상클래스 요소로 사용됨
-                + 임의의 클래스와 추상클래스 상속관계로써 extends 사용한다 ( 단일 상속만 지원)
+                + 임의의 클래스와 추상클래스 상속관계로써 extends 사용한다 ( 단일 상속만 지원 )
         + 목적
-            + 하위 클래스에서 특정 메서드만 사용하도록 강제 + 일반 클래스의 상속 (공통기능 재사용) 장점 제공
+            + **하위 클래스에서 특정 메서드만 사용하도록 강제 + 일반 클래스의 상속 (공통기능 재사용) 장점 제공**
         + 단점
             + 다른 클래스를 상속불가 (하나만 받아야 하기 때문에 인터페이스로 받으면 여러개 받을 수 있는 장점이 있다.)
             + 특정 메소드만 강제할 목적이다 -> 인터페이스로 만드는게 좋다 (확장성이 좋기 때문에)
     - 인터페이스
         + public interface 인터페이스명{}
         + 구성요소
-            + 상수, 추상메서드, default 메서드, static 메서드
+            + **상수, 추상메서드, default 메서드, static 메서드**
         + 특징
             + 임의의 클래스 이용해서 인터페이스 요소로 사용됨
                 + 임의의 클래스와 인터페이스 구현관계로서 implements 사용한다. (다중구현 가능)
             + 인터페이스간에 다중 상속 가능 (extends 사용)
         + 목적
-            + 하위 클래스에서 특정 메서드만 사용하도록 강제 + 클래스들간의 의존성 감소(decoupling)
+            + **하위 클래스에서 특정 메서드만 사용하도록 강제 + 클래스들간의 의존성 감소(decoupling)**
 
 * DB 연동 아키텍처
     - Main <----> Service <----> DAO <----> DB(오라클, Mysql)
@@ -773,7 +826,7 @@ java-study
             - long  =======================> Long
             - float =======================> Float
             - double=======================> Double
-            - char  =======================> **Charter**
+            - char  =======================> **Charater**
             - boolean =======================> Boolean
     
     - Case 1
@@ -878,6 +931,7 @@ java-study
         ![2일차 그림](./asset/day2_1.png)
 
         + Set 계열 : 저장되는 데이터의 순서가 없고 중복저장 불가 (동일한 값은 한번만 저장, 중복제거 기능 포함)
+
         + List 계열 : 저장되는 데이터의 순서가 있고 중복저장 가능
             + Set과 List는 데이터만 저장된다.
         
@@ -1014,3 +1068,142 @@ java-study
         System.out.println(s);
     ```
 > String 가장 큰 특징은 변경 불가 따라서 다양한 메서드로 처리하면 새로운 문자열이 매번 생성된다. StringBuffer/StringBuilder => 자신이 변경됨 => 메모리 관리 효율적.
+
+## Exception
+* 예외(Exception)
+    - 프로그램 실행중에 발생되는 의도하지 않은 문제
+    - 예외가 발생되면 가장 큰 문제는 프로그램이 '비정상 종료'된다.
+    - 결국 예외발생코드의 이후에 실행문은 실행되지 못하게 된다.
+
+* 예외처리(Exception Handling)
+    - 예외 발생코드의 이후의 실행문을 계속 실행 하도록 처리 ('정상종료' 의미) 
+    - 잘못된 이해 : 예외가 발생된 코드를 수정해서 다시 실행하도록 하는 것 
+    (불가능 -> 순차문이기 때문에)
+
+* 예외처리 방법 
+    - 예외처리 담당하는 클래스 계층 구조 
+    - Throwable 
+        + Error
+            
+        + Exception
+            + RuntimeException
+                + ArithmeticException
+                + NullPointException
+                + ClassCastException
+            + IOException (비 Runtime 계열)
+                + FileNotFoundException
+    
+    - Runtime 계열은 예외처리(try ~ catch 또는 throws) 방법으로 예외처리를 하지 않는다.
+    - Runtime 예외는 발생되면 안되는 코드이다. -> 조건체크로 없애야 한다.(compile unchecked 예외)
+    - 비 Runtime 계열은 반드시 예외처리를 (try~catch 또는 thorws) 해야된다. 안하면 컴파일 에러발생하고 어떤 예외처리 클래스인지 알려준다.
+
+    - 예외 클래스 활용한 예외처리 2가지 방법
+        + A : 예외가 발생된 곳에서 예외처리
+            ```java
+            try{
+                예외발생 코드1 -> 예외클래스 1 형태의
+                예외발생 코드2 -> 예외클래스 2 형태의 예외발생
+            }catch(예외클래스 변수(e)){
+                예외처리 코드 ===> 예외 발생된 이유를 친절하게 쉽게 이해할 수 있도록            메시지를 출력 해주는게 가장 베스트
+            }catch(){
+            }catch(Exception e){
+                다중 catch 쓸때는 마지막 Exception 어떤 예외가 발생할지 모르기          때문에 이미 가정한 시나리오 예외는 Catch 안에서 클래스로 표현
+            }finally{
+                반드시 수행되는 문장 : 파일이나 DB 연결을 종료 ( 자원 반납 )
+            }
+            ```
+
+        + B : 예외가 발생된 곳에서 예외처리하지 않고 위임하는 방법
+            + **throws 예외클래스**
+    
+    - **사용자가 필요시 명식적(강제적)으로 예외발생** 
+        + 비정상종료  --> 예외처리 필요 (try~catch 또는 throws)
+        + 사용자가 만든 어플리케이션에서 사용자가 의도한 결과가 나오지 않았을 때 시스템은 예외로 처리하지 않기 때문에 
+        + 명시적으로 예외발생시킬 수 있다. 
+        + DB의 조회시 데이터 없을 때
+        
+## Java I/O
+Input ~~~~~~자바 프로그램 ~~~~~Output
+* 용어정리
+    + Input 
+        + Keyboard (표준입력)
+        + File
+        + Network
+        + (byte/char)
+    + Output
+        + Monitor (표준출력)
+        + File
+        + Network
+        + (byte/char) -> String 기능 추가
+
+* 자바 I/O가 어려운 이유 ( 조합되는 것이 너무 많음 )
+    - byte - 인터페이스
+        + InputStream
+            + FileInputStream
+            + ObjectInputStream
+        + OutputStream
+            + FileOutputStream
+            + ObjectOuputStream
+    - char 
+        + Reader
+            + InputStreamReader
+            + BufferReader
+            + FileReader
+        + Writer
+            + PrintWriter
+            + FileWriter
+
+
+## Serialization
+* 객체 직렬화
+    - 개념
+        + 임의의 객체 생성했을때 heap 메모리에 인스턴스 정보중에서 데이터 (인스턴스 변수)를 파일이나 또는 네트워크 전송시 연속적인 byte 데이터로 변환해야 되는데 이과정을 의미한다. 반드시 객체 생성에서 바이트 열로 만들 수 있는 클래스는 반드시 특별한 인터페이스 Serializable
+        + 모든 클래스가 객체 직렬화 되는 것은 아니고 반드시 implements Serializable 받은 클래스만 가능하다.
+            + String
+        + 종류
+            + FileOutputStream
+            + FileInputStream
+            + ObjectInputStream
+            + ObjectOutputStream
+
+
+## Thread
+* 프로세스 (Process)
+
+* 스레드 (Thread)
+    - 프로세스 안에서 동작하는 세부적인 작업 단위
+    - 여러 스레드가 모여서 하나의 프로세스를 이룬다.
+    - 병행처리가 가능하다.
+    - 데이터를 공유할 수 있다.
+    - 가장 큰 특징 2가지
+        + 병행처리
+        + 데이터 공유
+    - 멀티 스레드 : 하나의 프로세스안에 여러개의 스레드가 실행되고 있는 것.
+
+
+* 스레드 장점 및 단점
+    - 자원공유 가능 (공유문제 발생 : 데이터가 변경 ==> 해결 : 동기화 )
+    - 병행처리 (성능향상) <------> 순서처리 (성능저하)
+    - 스레드 제어가 어렵다.
+
+* 자바 스레드 생성방법
+    - Runnable 인터페이스
+    - Thread 클래스 (Runnable 인터페이스를 implement 한 것)
+    - Myclass : Thread 상속 : 스레드가 됨
+    - Myclass : Runnable 인터페이스 : 아직 스레드가 되진 않음 -> 스레드가 되게끔 추가적인 작업 필요
+    - 확정을 위해서는 Runnable 인터페이스를 사용하는것이 좋다.
+
+* Main 스레드가 백그라운드로 실행중
+
+* 스레드 상태 (state)
+    - 시작 -> Runnable 상태 -> Running 상태 (run() 실행) ---> dead
+    - 대기상태 (stop)
+        + Running 상태에서 변경됨 -> stop
+        + stop -> Runnable 상태로 변경
+        + I/O 대표적 우선순위가 높음 ( Running 중인게 모두 대기상태로 빠짐 )
+        + 우리가 임의의 대기상태로 빠지게 가능 (sleep, yield, join)
+
+* 스레드는 우선권 갖는다
+    - 10(max)
+    - 5(normal)
+    - 1(min)
