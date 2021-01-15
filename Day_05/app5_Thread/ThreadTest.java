@@ -44,6 +44,9 @@ public class ThreadTest {
          *      5 (normal)
          *      - main 에서 만들어지는 스레드는 기본적 5를 가짐
          *      1 (min)
+         *   8) 공유문제 해결 ===> 동기화 활용
+         *      - synchronized
+             *      설명 : 하나의 공유객체의 특정 메서드를 여러 스레드가 병행적으로 실행될 수 있다.
          *
          */
     }
